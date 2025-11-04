@@ -4,6 +4,7 @@ using AutomationInfrastructure.Pages;
 using AutomationInfrastructure.Utils;
 using Microsoft.Playwright;
 using System;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace AutomationInfrastructure
 {
@@ -35,6 +36,58 @@ namespace AutomationInfrastructure
             int apiCount = TextProcessor.NormalizeAndCountUniqueWords(apiText);
 
             Assert.Equal(apiCount, uiCount);
+
+            await page.CloseAsync();
+        }
+
+        [Fact]
+        public async Task TechnologyNames_InTestingAndDebuggingRow_MustBeLinks()
+        {
+            IPage page = await (_fixture.Browser ?? throw new InvalidOperationException("Browser not initialized")).NewPageAsync();
+            await page.GotoAsync("https://en.wikipedia.org/wiki/Playwright_(software)");
+            WikipediaPage wikipediaPage = new WikipediaPage(page);
+
+            var toolNames = await wikipediaPage.GetTestingAndDebuggingToolLinks();
+
+            Assert.NotEmpty(toolNames);
+
+            var expectedTools = new List<string>
+        {
+            "CodeView",
+            "OneFuzz",
+            "Playwright",
+            "Script Debugger",
+            "WinDbg",
+            "xUnit.net"
+        };
+
+            Assert.Equal(
+                expectedTools.OrderBy(t => t),
+                toolNames.OrderBy(t => t)
+            );
+
+            await page.CloseAsync();
+        }
+
+        [Fact]
+        public async Task Settings_ShouldChangeThemeToDark()
+        {
+            IPage page = await (_fixture.Browser ?? throw new InvalidOperationException("Browser not initialized")).NewPageAsync();
+            await page.GotoAsync("https://en.wikipedia.org/wiki/Playwright_(software)");
+
+            var darkOptionLocator = page.GetByLabel("Dark");
+            await darkOptionLocator.ClickAsync();
+
+            const string ExpectedRgbColor = "rgb(32, 33, 34)";
+            const string ElementToInspect = "body";
+
+            var actualBackgroundColor = await page.EvaluateAsync<string>(
+           $"element => window.getComputedStyle(document.querySelector('{ElementToInspect}')).backgroundColor",
+           ElementToInspect);
+
+            Assert.Equal(ExpectedRgbColor, actualBackgroundColor, StringComparer.OrdinalIgnoreCase);
+
+            await page.CloseAsync();
         }
     }
 }
