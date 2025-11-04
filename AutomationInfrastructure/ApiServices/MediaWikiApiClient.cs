@@ -38,9 +38,7 @@ namespace AutomationInfrastructure.ApiServices
                 return string.Empty;
             }
 
-            string wikitext = wikitextElem.GetString() ?? string.Empty;
-
-            return TextProcessor.NormalizeWikitext(wikitext);
+            return wikitextElem.GetString() ?? string.Empty;
         }
 
         private async Task<string?> GetSectionIndexByTitleAsync(string sectionTitle)

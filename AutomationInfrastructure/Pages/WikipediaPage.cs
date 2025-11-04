@@ -43,11 +43,7 @@ namespace AutomationInfrastructure.Pages
             }");
 
             if (string.IsNullOrWhiteSpace(raw)) return string.Empty;
-
-            // post-process: decode entities, remove numeric citation markers like [1], collapse whitespace
-            raw = WebUtility.HtmlDecode(raw);
-            raw = Regex.Replace(raw, @"\[\d+\]", "");
-            raw = Regex.Replace(raw, @"\s+", " ").Trim();
+           
             return raw;
         }
     }

@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using Newtonsoft.Json.Linq;
+using System.Net;
 using System.Text.RegularExpressions;
 
 namespace AutomationInfrastructure.Utils
@@ -8,16 +9,21 @@ namespace AutomationInfrastructure.Utils
     {
         public static string NormalizeText(string rawText)
         {
-            string normalized = rawText.ToLowerInvariant();
+            if (string.IsNullOrWhiteSpace(rawText)) return string.Empty;
 
-            // Remove punctuation, square brackets and numbers (e.g. [14]) using a regular expression
-            // [^a-z\s] matches any character that is not a letter (a-z) and not whitespace (\s)
-            normalized = Regex.Replace(normalized, @"[^a-z\s]", " ");
+            string cleaned = rawText;
 
-            // Replace multiple whitespace characters with a single space
-            normalized = Regex.Replace(normalized, @"\s+", " ").Trim();
+            cleaned = Regex.Replace(cleaned, @"<ref[^>]*>.*?<\/ref>", " ", RegexOptions.Singleline);
+            cleaned = Regex.Replace(cleaned, @"<ref[^>]*\/>", " ");
+            cleaned = Regex.Replace(cleaned, @"={2,}\s*[^=]+\s*={2,}", " ");
+            cleaned = Regex.Replace(cleaned, @"{{[^}]+}}", " ");
+            cleaned = WebUtility.HtmlDecode(cleaned);
+            cleaned = Regex.Replace(cleaned, @"\[\d+\]", " ");
+            cleaned = cleaned.ToLowerInvariant();
+            cleaned = Regex.Replace(cleaned, @"[^a-z\s]", " ");
+            cleaned = Regex.Replace(cleaned, @"\s+", " ").Trim();
 
-            return normalized;
+            return cleaned;
         }
 
         public static int CountUniqueWords(string normalizedText)
@@ -40,25 +46,6 @@ namespace AutomationInfrastructure.Utils
         {
             var normalized = NormalizeText(rawText);
             return CountUniqueWords(normalized);
-        }
-
-        public static string NormalizeWikitext(string wikitext)
-        {
-            if (string.IsNullOrWhiteSpace(wikitext)) return string.Empty;
-
-            var cleaned = Regex.Replace(wikitext, @"<ref[^>]*>.*?<\/ref>", " ", RegexOptions.Singleline);
-
-            cleaned = Regex.Replace(cleaned, @"<ref[^>]*\/>", " ");
-
-            cleaned = Regex.Replace(cleaned, @"={2,}\s*[^=]+\s*={2,}", " ");
-
-            cleaned = Regex.Replace(cleaned, @"{{[^}]+}}", " ");
-
-            cleaned = WebUtility.HtmlDecode(cleaned);
-
-            cleaned = Regex.Replace(cleaned, @"\s+", " ").Trim();
-
-            return cleaned;
         }
     }
 }
