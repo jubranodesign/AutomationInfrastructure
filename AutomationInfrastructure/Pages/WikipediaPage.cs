@@ -13,7 +13,7 @@ namespace AutomationInfrastructure.Pages
 
         public async Task<string> ExtractTextFromDebuggingFeatures()
         {
-            var pLocatorFinal = _page.Locator(
+            var pLocator = _page.Locator(
                 "xpath=//div[h3[@id='Debugging_features']]/following-sibling::p[1]"
              );
 
@@ -21,7 +21,7 @@ namespace AutomationInfrastructure.Pages
                 "xpath=//div[h3[@id='Debugging_features']]/following-sibling::ul[1]"
             );
 
-            var pText = await pLocatorFinal.TextContentAsync() ?? string.Empty;
+            var pText = await pLocator.TextContentAsync() ?? string.Empty;
             var liTexts = await ulLocator.Locator("li").AllTextContentsAsync();
             var ulText = string.Join(" ", liTexts.Select(t => t.Trim()));
 
