@@ -9,9 +9,7 @@
 * **Automation Tool:** Microsoft Playwright
 * **Language:** C\# / .NET
 * **Testing Framework:** **xUnit**
-* **Data Handling:** System.Text.Json (for API response parsing)
-* **Version Control:** Git
-
+* 
 ---
 
 ## 🎯 Architectural Design & Key Decisions
