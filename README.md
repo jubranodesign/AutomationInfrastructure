@@ -4,7 +4,7 @@ This project presents an advanced End-to-End (E2E) testing infrastructure, based
 
 ---
 
-## 🛠️ Key Technologies
+## Key Technologies
 
 * **Automation Tool:** Microsoft Playwright
 * **Language:** C\# / .NET
