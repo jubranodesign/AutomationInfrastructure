@@ -1,7 +1,6 @@
 # 🚀 C# Playwright Automation Infrastructure
 
-פרויקט זה מציג תשתית בדיקות קצה-לקצה (E2E) מתקדמת, המבוססת על **Playwright** ו-**C\#** (.NET). הפתרון מדגים יישום קפדני של **עקרונות ארכיטקטורה נקייה**, יציבות גבוהה של הבדיקות, והפרדה יעילה בין שכבות ה-UI לבין שכבות ה-API.
-
+This project presents an advanced End-to-End (E2E) testing infrastructure, based on Playwright and C# (.NET). The solution demonstrates rigorous application of clean architecture principles, high test stability, and effective separation between the UI and API layers.
 ---
 
 ## 🛠️ Key Technologies
