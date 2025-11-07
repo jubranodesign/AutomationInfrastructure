@@ -44,7 +44,7 @@ xUnit Setup: Fixture classes (IClassFixture/ICollectionFixture) for resource lif
 Utils/ <br/>
 Shared Utilities: Generic helper classes for data manipulation, logging,
 
-## 🏃 Getting Started
+## Getting Started
 
 1.  **Prerequisites:** Ensure the $\text{.NET SDK}$ is installed.
 2.  **Clone the repository:**
