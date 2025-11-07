@@ -40,7 +40,7 @@ UI Layer: Specific Page Object Models (Locators and UI interaction methods).<br/
 Tests/ <br/>
 Test Layer: Contains all xUnit test execution logic and setup.<br/><br/>
 Fixtures/ <br/>
-xUnit Setup: Fixture classes (IClassFixture/ICollectionFixture) for resource lifecycle<br/>
+xUnit Setup: Fixture classes (IClassFixture/ICollectionFixture) for resource lifecycle<br/><br/>
 Utils/ <br/>
 Shared Utilities: Generic helper classes for data manipulation, logging,
 
