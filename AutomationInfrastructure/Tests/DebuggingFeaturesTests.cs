@@ -24,13 +24,13 @@ namespace AutomationInfrastructure
         {
             IPage page = await (_fixture.Browser ?? throw new InvalidOperationException("Browser not initialized")).NewPageAsync();
             await page.GotoAsync("https://en.wikipedia.org/wiki/Playwright_(software)");
-            WikipediaPage wikipediaPage = new WikipediaPage(page);
-            var uiText = await wikipediaPage.ExtractTextFromDebuggingFeatures();
+            WikipediaPlaywrightPage wikipediaPlaywrightPage = new WikipediaPlaywrightPage(page);
+            var uiText = await wikipediaPlaywrightPage.ExtractTextFromDebuggingFeaturesAsync();
 
             var apiCtx = _fixture.ApiContext ?? throw new InvalidOperationException("ApiContext not initialized");
             // initialize API client with the ApiContext and the target page title
             var apiClient = new MediaWikiApiClient(apiCtx, "Playwright_(software)");
-            string apiText = await apiClient.ExtractDebuggingFeaturesTextFromApi();
+            string apiText = await apiClient.GetSectionContentByTitleAsync("Debugging features");
 
             int uiCount = TextProcessor.NormalizeAndCountUniqueWords(uiText);
             int apiCount = TextProcessor.NormalizeAndCountUniqueWords(apiText);
@@ -45,9 +45,9 @@ namespace AutomationInfrastructure
         {
             IPage page = await (_fixture.Browser ?? throw new InvalidOperationException("Browser not initialized")).NewPageAsync();
             await page.GotoAsync("https://en.wikipedia.org/wiki/Playwright_(software)");
-            WikipediaPage wikipediaPage = new WikipediaPage(page);
+            WikipediaPlaywrightPage wikipediaPlaywrightPage = new WikipediaPlaywrightPage(page);
 
-            var toolNames = await wikipediaPage.GetTestingAndDebuggingToolLinks();
+            var toolNames = await wikipediaPlaywrightPage.GetTestingAndDebuggingToolLinksAsync();
 
             Assert.NotEmpty(toolNames);
 

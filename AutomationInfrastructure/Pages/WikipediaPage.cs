@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 
 namespace AutomationInfrastructure.Pages
 {
-    public class WikipediaPage
+    public class WikipediaPlaywrightPage
     {
         private readonly IPage _page;
 
-        public WikipediaPage(IPage page) => _page = page;
+        public WikipediaPlaywrightPage(IPage page) => _page = page;
 
-        public async Task<string> ExtractTextFromDebuggingFeatures()
+        public async Task<string> ExtractTextFromDebuggingFeaturesAsync()
         {
             var pLocator = _page.Locator(
                 "xpath=//div[h3[@id='Debugging_features']]/following-sibling::p[1]"
@@ -27,7 +27,7 @@ namespace AutomationInfrastructure.Pages
 
             return $"{pText} {ulText}";
         }
-        public async Task<IReadOnlyList<string>> GetTestingAndDebuggingToolLinks()
+        public async Task<IReadOnlyList<string>> GetTestingAndDebuggingToolLinksAsync()
         {
             var allRowsLocator = _page.Locator("table.navbox-inner tr");
 

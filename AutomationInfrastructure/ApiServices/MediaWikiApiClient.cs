@@ -13,18 +13,18 @@ namespace AutomationInfrastructure.ApiServices
         private readonly IAPIRequestContext _apiContext;
         private readonly string _pageTitle;
 
-        public MediaWikiApiClient(IAPIRequestContext apiContext, string pageTitle = "Playwright_(software)")
+        public MediaWikiApiClient(IAPIRequestContext apiContext, string pageTitle)
         {
             _apiContext = apiContext ?? throw new ArgumentNullException(nameof(apiContext));
             _pageTitle = string.IsNullOrWhiteSpace(pageTitle) ? throw new ArgumentNullException(nameof(pageTitle)) : pageTitle;
         }
 
-        public async Task<string> ExtractDebuggingFeaturesTextFromApi()
+        public async Task<string> GetSectionContentByTitleAsync(string sectionTitle)
         {
-            // 1) find section index for "Debugging features"
-            string sectionIndex = await GetSectionIndexByTitleAsync("Debugging features");
+            // 1) find section index By Title
+            string sectionIndex = await GetSectionIndexByTitleAsync(sectionTitle);
             if (string.IsNullOrEmpty(sectionIndex))
-                throw new InvalidOperationException("Section 'Debugging features' not found.");
+                throw new InvalidOperationException("Section not found.");
 
             // 2) request the section HTML
             var resp = await _apiContext.GetAsync($"w/api.php?action=parse&page={Uri.EscapeDataString(_pageTitle)}&section={sectionIndex}&prop=wikitext&format=json");
@@ -41,7 +41,7 @@ namespace AutomationInfrastructure.ApiServices
             return wikitextElem.GetString() ?? string.Empty;
         }
 
-        private async Task<string?> GetSectionIndexByTitleAsync(string sectionTitle)
+        private async Task<string> GetSectionIndexByTitleAsync(string sectionTitle)
         {
             var resp = await _apiContext.GetAsync($"w/api.php?action=parse&page={Uri.EscapeDataString(_pageTitle)}&prop=sections&format=json");
             var body = await resp.TextAsync();
@@ -50,7 +50,7 @@ namespace AutomationInfrastructure.ApiServices
             if (!doc.RootElement.TryGetProperty("parse", out var parseElem) ||
                 !parseElem.TryGetProperty("sections", out var sectionsElem))
             {
-                return null;
+                return string.Empty;
             }
 
             foreach (var s in sectionsElem.EnumerateArray())
@@ -61,12 +61,12 @@ namespace AutomationInfrastructure.ApiServices
                     if (string.Equals(line.Trim(), sectionTitle, StringComparison.OrdinalIgnoreCase))
                     {
                         if (s.TryGetProperty("index", out var indexElem))
-                            return indexElem.GetString();
+                            return indexElem.GetString() ?? string.Empty;
                     }
                 }
             }
 
-            return null;
+            return string.Empty;
         }
       
     }
