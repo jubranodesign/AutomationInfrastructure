@@ -29,7 +29,7 @@ The project's design focuses on **maintainability, reusability, and stability**,
 
 ---
 
-## 📁 Repository Structure
+## Repository Structure
 
 The project structure is organized for clear separation of responsibilities:
 
