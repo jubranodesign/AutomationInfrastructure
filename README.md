@@ -9,7 +9,7 @@
 * **Automation Tool:** Microsoft Playwright
 * **Language:** C\# / .NET
 * **Testing Framework:** **xUnit**
-* 
+
 ---
 
 ## 🎯 Architectural Design & Key Decisions
