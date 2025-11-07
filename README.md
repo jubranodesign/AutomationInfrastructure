@@ -43,7 +43,7 @@ The project structure is organized for clear separation of responsibilities:
 1.  **Prerequisites:** Ensure the $\text{.NET SDK}$ is installed.
 2.  **Clone the repository:**
     ```bash
-    git clone [REPO_URL]
+    git clone
     ```
 3.  **Install Playwright Browsers (One-time):**
     ```bash
