@@ -33,15 +33,15 @@ The project's design focuses on **maintainability, reusability, and stability**,
 
 The project structure is organized for clear separation of responsibilities:
 
-ApiClients/ 
-API Layer: Generic API clients (e.g., MediaWikiApiClient) and JSON parsing.
-Pages/
-UI Layer: Specific Page Object Models (Locators and UI interaction methods).
-Tests/ 
-Test Layer: Contains all xUnit test execution logic and setup.
-Fixtures/ 
-xUnit Setup: Fixture classes (IClassFixture/ICollectionFixture) for resource lifecycle
-TestClasses/ 
+ApiClients/ <br/>
+API Layer: Generic API clients (e.g., MediaWikiApiClient) and JSON parsing.<br/><br/>
+Pages/<br/>
+UI Layer: Specific Page Object Models (Locators and UI interaction methods).<br/><br/>
+Tests/ <br/>
+Test Layer: Contains all xUnit test execution logic and setup.<br/><br/>
+Fixtures/ <br/>
+xUnit Setup: Fixture classes (IClassFixture/ICollectionFixture) for resource lifecycle<br/><br/>
+TestClasses/ <br/>
 Actual xUnit Test Classes (which consume the Fixtures).
 
 ## 🏃 Getting Started
